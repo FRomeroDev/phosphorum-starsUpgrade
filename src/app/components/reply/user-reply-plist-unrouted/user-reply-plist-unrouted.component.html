@@ -1,0 +1,129 @@
+<div *ngIf="status!=null">
+  <div class="d-flex justify-content-center my-3">
+    <div class="alert alert-danger" role="alert">
+      {{status!.error.message}} - {{status!.message}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="status==null">
+  <div class="d-flex justify-content-center" *ngIf="!oSessionService.isSessionActive()">
+    <h5 class="px-2">Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} replies</h5>
+  </div>
+  <div class="d-flex justify-content-between" *ngIf="oSessionService.isSessionActive()">
+    <button type="button" class="btn btn-outline-primary" (click)="postNewThread()">Post new thread</button>
+    <h5 class="px-2">Showing {{oPage?.numberOfElements}} of total {{oPage?.totalElements}} replies</h5>
+    <button type="button" class="btn btn-outline-primary" (click)="postNewReply()">Post new reply</button>
+  </div>
+  <div class="d-flex justify-content-center m-1">
+    <p-paginator (onPageChange)="onPageChang($event)" [first]="oPaginatorState.first!" [rows]="oPaginatorState.rows!"
+      [totalRecords]="oPage?.totalElements || 0" [rowsPerPageOptions]="" [showPageLinks]="false"></p-paginator>
+  </div>
+
+  <div class="m-1">
+    <ul class="list-group">
+      <!-- if ni oPage.content then show no content -->
+      <li class="list-group-item" *ngIf="oPage?.content?.length==0">
+        <div class="d-flex justify-content-center align-items-center my-3 p-5">
+          <div class="alert alert-danger" role="alert">
+
+            <mat-icon style="transform: scale(2);" aria-hidden="false" aria-label="No replies found"
+              fontIcon="sentiment_dissatisfied"></mat-icon>
+          </div>
+
+          <h4 class="px-3">No replies found for <i style="color:red">"{{oThread?.title}}"</i> thread</h4>
+        </div>
+      </li>
+      <li class="list-group-item" *ngFor="let r of oPage?.content">
+        <div class="d-flex flex-column">
+          <div class="d-flex justify-content-between my-3">
+            <div class="badge text-bg-info" *ngIf="r.user.username!=oSessionService.getUsername()">
+              {{r.user.username}}
+            </div>
+            <div class="badge text-bg-warning" *ngIf="r.user.username==oSessionService.getUsername()">
+              {{r.user.username}}
+            </div>
+            <div class="badge text-bg-secondary">{{r.creation | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+          </div>
+          <div class="my-3">
+            <h2>{{r.title}}</h2>
+          </div>
+          <p>{{r.body}}</p>
+          <!-- 
+
+
+        <form>
+            <p class="clasificacion">
+              <input id="radio1" type="radio" name="estrellas" value="5">
+              <label for="radio1">★</label>
+              <input id="radio2" type="radio" name="estrellas" value="4">
+              <label for="radio2">★</label>
+              <input id="radio3" type="radio" name="estrellas" value="3">
+              <label for="radio3">★</label>
+              <input id="radio4" type="radio" name="estrellas" value="2">
+              <label for="radio4">★</label>
+              <input id="radio5" type="radio" name="estrellas" value="1">
+              <label for="radio5">★</label>
+            </p>
+          </form>
+           -->
+
+          <!-- ... (otros códigos) -->
+
+
+
+
+          <!-- ... (otros códigos) -->
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <button type="button" class="btn btn-outline-info"
+                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                (click)="postRatingReply(r)">Rate reply</button>
+            </div>
+
+            <div *ngIf="averageRatings !== undefined">
+              <div *ngFor="let r of oPage?.content">
+                <div *ngIf="averageRatings[r.id] !== undefined">
+                  <div class="star-container">
+                    <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                      <span class="star" [class.selected]="star <= roundRating(averageRatings[r.id])">★</span>
+                    </ng-container>
+                    <!-- <p>Media: {{ roundRating(averageRatings[r.id]) }}</p> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="d-flex justify-content-center my-2">
+            <button type="button" class="btn  btn-sm btn-outline-danger" (click)="doRemove(r)"
+              *ngIf="r.user.username==oSessionService.getUsername()">Remove</button>
+          </div>
+        </div>
+
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+
+<p-confirmDialog #cd2 [style]="{ width: '30vw' }">
+  <ng-template pTemplate="header">
+    <h5> Reply removal</h5>
+  </ng-template>
+  <ng-template pTemplate="message">
+    <div class="container d-flex align-items-center justify-content-center">
+      <app-user-reply-detail-unrouted [id]="oReplyToRemove!.id"></app-user-reply-detail-unrouted>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p>¿Are you sure to remove reply?</p>
+    <button class="btn btn-primary mx-1" pButton icon="pi pi-times" label="No" (click)="cd2.reject()"></button>
+    <button class="btn btn-danger mx-1" pButton icon="pi pi-check" label="Yes" (click)="cd2.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

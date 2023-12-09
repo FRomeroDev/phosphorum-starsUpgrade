@@ -1,0 +1,41 @@
+<div *ngIf="status !== null">
+  <div class="d-flex justify-content-center my-3">
+    <div class="alert alert-danger" role="alert">
+      {{status!.error.message}} - {{status!.message}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="status === null">
+  <div class="col-12">
+    <div class="d-flex justify-content-center my-3">
+      <form [formGroup]="replyForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+
+
+          <mat-form-field [style.width.px]=500>
+            <mat-label>Title:</mat-label>
+            <input matInput formControlName="title" placeholder="Title" required>
+            <mat-hint align="end">(3 to 255 characters long)</mat-hint>
+            <mat-error *ngIf="hasError('title', 'required')">Title is required</mat-error>
+            <mat-error *ngIf="hasError('title', 'minlength')">Must be longer</mat-error>
+            <mat-error *ngIf="hasError('title', 'maxlength')">Exceeds characters limit</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field [style.width.px]=500>
+            <mat-label>Body:</mat-label>
+            <textarea matInput rows="15" formControlName="body" placeholder="Body" required></textarea>
+            <mat-hint align="end">(Max. 1000 characters)</mat-hint>
+            <mat-error *ngIf="hasError('body', 'required')">Body is required</mat-error>
+            <mat-error *ngIf="hasError('body', 'maxlength')">Exceeds characters limit</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="text-center mt-5">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!replyForm.valid">Post Reply</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

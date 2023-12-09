@@ -1,0 +1,106 @@
+<div *ngIf="status !== null">
+  <div class="d-flex justify-content-center my-3">
+    <div class="alert alert-danger" role="alert">
+      {{status!.error.message}} - {{status!.message}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="status === null">
+  <div class="col-12">
+    <div class="d-flex justify-content-center my-3">
+      <form [formGroup]="ratingForm" (ngSubmit)="onSubmit()">
+
+        <!-- ID field (displayed only in EDIT mode) -->
+        <div class="form-group">
+          <mat-form-field *ngIf="operation=='EDIT'">
+            <mat-label>ID:</mat-label>
+            <input matInput formControlName="id" placeholder="ID" required readonly>
+            <mat-hint align="end">(can't change this number)</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- User Sender field -->
+        <div formGroupName="user">
+          <div class="form-group">
+            <mat-form-field [style.width.px]=200>
+              <mat-label>User</mat-label>
+              <input matInput formControlName="id" placeholder="User ID" required pattern="\d*">
+              <mat-hint align="end">(Only digits are allowed)</mat-hint>
+              <mat-error *ngIf="hasError('user', 'id')">User ID is required</mat-error>
+              <mat-error *ngIf="hasError('user', 'id')">Format user ID wrong</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="onShowUsersSelection();
+    " style="margin-left: 10px; width: 152px;"> <i class="pi pi-search"></i> Find an user</button>
+            <!-- Display Sender's name -->
+            {{oRating.user.name}} {{oRating.user.surname}}
+            <!-- MODIFY TO DISPLAY NAME IN THE INPUT OR SOMETHING ELEGANT -->
+          </div>
+        </div>
+
+        <!-- User Sender field -->
+        <div formGroupName="thread">
+          <div class="form-group">
+            <mat-form-field [style.width.px]=200>
+              <mat-label>Thread:</mat-label>
+              <input matInput formControlName="id" placeholder="Thread ID" required pattern="\d*">
+              <mat-hint align="end">(Only digits are allowed)</mat-hint>
+              <mat-error *ngIf="hasError('thread', 'id')">Thread ID is required</mat-error>
+              <mat-error *ngIf="hasError('thread', 'id')">Format thread ID wrong</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="onShowThreadsSelection();
+  " style="margin-left: 10px; width: 152px;"> <i class="pi pi-search"></i> Find a thread</button>
+            <!-- Display Sender's name -->
+            {{oRating.thread.title}}
+            <!-- MODIFY TO DISPLAY NAME IN THE INPUT OR SOMETHING ELEGANT -->
+          </div>
+        </div>
+
+
+        <!-- User Sender field -->
+        <div formGroupName="reply">
+          <div class="form-group">
+            <mat-form-field [style.width.px]=200>
+              <mat-label>Reply:</mat-label>
+              <input matInput formControlName="id" placeholder="Reply ID" required pattern="\d*">
+              <mat-hint align="end">(Only digits are allowed)</mat-hint>
+              <mat-error *ngIf="hasError('reply', 'id')">Reply ID is required</mat-error>
+              <mat-error *ngIf="hasError('reply', 'id')">Format reply ID wrong</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="onShowRepliesSelection();
+      " style="margin-left: 10px; width: 152px;"> <i class="pi pi-search"></i> Find a reply</button>
+            <!-- Display Sender's name -->
+            {{oRating.reply.title}}
+            <!-- MODIFY TO DISPLAY NAME IN THE INPUT OR SOMETHING ELEGANT -->
+          </div>
+        </div>
+
+        <div formGroupName="rating">
+          <div class="form-group">
+            <mat-form-field [style.width.px]=200>
+              <mat-label>Rating:</mat-label>
+              <input matInput formControlName="id" placeholder="Rating" required pattern="[1-5]">
+              <mat-hint align="end">(Only digits are allowed)</mat-hint>
+              <mat-error *ngIf="hasError('rating', 'id')">Rating is required</mat-error>
+              <mat-error *ngIf="hasError('rating', 'id')">Rating is wrong</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <label for="created_at" class="col-sm-12 col-form-label"> Creation datetime:</label>
+          <div class="col-sm-12">
+            <p-calendar formControlName="created_at" [locale]="es" dateFormat="dd/mm/yy" inputId="spanish"
+              [showIcon]="true" [showTime]="true" [showSeconds]="true"></p-calendar>
+            <div *ngIf="hasError('created_at', 'required')" class="text-danger"> You must
+              set a valid date
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-5">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!ratingForm.valid">Save Rating</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div *ngIf="status!=null">
+    <div class="d-flex justify-content-center my-3">
+        <div class="alert alert-danger" role="alert">
+            {{status!.error.message}} - {{status!.message}}
+        </div>
+    </div>
+</div>
+
+<div *ngIf="status==null">
+    <table class="table table-striped table-hover">
+        <tbody>
+            <tr>
+                <th>title</th>
+                <td>{{oReply.title}}</td>
+            </tr>
+            <tr>
+                <th>body</th>
+                <td>{{oReply.body}}</td>
+            </tr>
+            <tr>
+                <th>creation</th>
+                <td>{{oReply.creation | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+            <tr>
+                <th>thread</th>
+                <td>{{oReply.thread.title}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

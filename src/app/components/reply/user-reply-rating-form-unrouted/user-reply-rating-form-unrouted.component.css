@@ -1,0 +1,47 @@
+#form {
+  width: 250px;
+  margin: 0 auto;
+  height: 100px;
+}
+
+#form p {
+  text-align: center;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: rgb(130, 130, 130);
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color: #ffd700; /* Amarillo */
+}
+
+input[type="radio"]:checked ~ label {
+  color: #ffd700; /* Amarillo */
+}
+
+#form.selected label,
+#form.selected label:hover {
+  color: #ffd700; /* Amarillo */
+}
+
+#form.selected input[type="radio"]:checked ~ label {
+  color: #ffd700; /* Amarillo */
+}
+.btn-outline-primary:hover {
+  background-color: #ededed; /* Cambia este color según tus preferencias */
+  color: #007bff; /* Cambia el color del texto si lo deseas */
+}
+.btn-outline-primary {
+  margin-right: 4%;
+}

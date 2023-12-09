@@ -1,0 +1,39 @@
+<div class="container-fluid px-5">
+
+  <div class="row align-items-start">
+    <div class="col-xxl-12 text-center p-3 mt-2">
+      <h1 class="title">PHOSPHORUM</h1>
+      <h2 class="subtitle">light your thoughts</h2>
+    </div>
+  </div>
+  <div class="row align-items-start">
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6 threads">
+      <app-user-thread-plist-unrouted (thread_selection)="onThreadChange($event)"
+        [reload]="reloadThreads"></app-user-thread-plist-unrouted>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 replies">
+      <app-user-reply-plist-unrouted [id_thread]="idThread"
+        (reply_change)="onReplyChange($event)"></app-user-reply-plist-unrouted>
+    </div>
+    <div class="col-xxl-2 col-xl-2 col-lg-2 info">
+      <div class="card">
+        <div class="card-header">
+          Featured Users
+        </div>
+        <div class="card-body">
+          <app-user-user-featured-unrouted></app-user-user-featured-unrouted>
+        </div>
+      </div>
+      <!--
+      <div class="card mt-3">
+        <div class="card-header">
+          Featured Threads
+        </div>
+        <div class="card-body">
+          <app-user-thread-featured-unrouted></app-user-thread-featured-unrouted>
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+</div>

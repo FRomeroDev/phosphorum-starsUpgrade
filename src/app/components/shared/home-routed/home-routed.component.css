@@ -1,0 +1,26 @@
+
+.title {
+    letter-spacing: 6vw;    
+    font-size:4vw; 
+    margin: 10px 0px;   
+}
+.subtitle {
+    letter-spacing: 20px;
+    word-spacing: 80px;
+    font-size: 20px;
+}
+
+.threads {
+    padding: 5px;
+    /* background-color: paleturquoise;*/
+}
+
+.replies {
+    padding: 5px;
+    /*background-color: mediumpurple;*/
+}
+
+.info {
+    padding: 5px;
+    /*background-color: lightsteelblue;*/
+}
